@@ -1,6 +1,6 @@
 import unittest
 
-from clvm.operators import OperatorDict
+from chik_clvm.operators import OperatorDict
 
 
 class OperatorDictTest(unittest.TestCase):

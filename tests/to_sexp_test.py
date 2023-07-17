@@ -1,8 +1,8 @@
 import unittest
 
 from typing import Optional, Tuple, Any
-from clvm.SExp import SExp, looks_like_clvm_object, convert_atom_to_bytes
-from clvm.CLVMObject import CLVMObject
+from chik_clvm.SExp import SExp, looks_like_chik_clvm_object, convert_atom_to_bytes
+from chik_clvm.CHIK_CLVMObject import CHIK_CLVMObject
 
 
 def validate_sexp(sexp):
@@ -13,8 +13,8 @@ def validate_sexp(sexp):
         if v.pair:
             assert isinstance(v.pair, tuple)
             v1, v2 = v.pair
-            assert looks_like_clvm_object(v1)
-            assert looks_like_clvm_object(v2)
+            assert looks_like_chik_clvm_object(v1)
+            assert looks_like_chik_clvm_object(v2)
             s1, s2 = v.as_pair()
             validate_stack.append(s1)
             validate_stack.append(s2)
@@ -52,23 +52,23 @@ def print_tree(tree: SExp) -> str:
 
 class ToSExpTest(unittest.TestCase):
     def test_cast_1(self):
-        # this was a problem in `clvm_tools` and is included
+        # this was a problem in `chik_clvm_tools` and is included
         # to prevent regressions
         sexp = SExp.to(b"foo")
         t1 = sexp.to([1, sexp])
         validate_sexp(t1)
 
     def test_wrap_sexp(self):
-        # it's a bit of a layer violation that CLVMObject unwraps SExp, but we
+        # it's a bit of a layer violation that CHIK_CLVMObject unwraps SExp, but we
         # rely on that in a fair number of places for now. We should probably
         # work towards phasing that out
-        o = CLVMObject(SExp.to(1))
+        o = CHIK_CLVMObject(SExp.to(1))
         assert o.atom == bytes([1])
 
     def test_arbitrary_underlying_tree(self):
 
         # SExp provides a view on top of a tree of arbitrary types, as long as
-        # those types implement the CLVMObject protocol. This is an example of
+        # those types implement the CHIK_CLVMObject protocol. This is an example of
         # a tree that's generated
         class GeneratedTree:
 
@@ -103,7 +103,7 @@ class ToSExpTest(unittest.TestCase):
         tree = SExp.to(GeneratedTree(3, 10))
         assert print_leaves(tree) == "10 11 12 13 14 15 16 17 "
 
-    def test_looks_like_clvm_object(self):
+    def test_looks_like_chik_clvm_object(self):
 
         # this function can't look at the values, that would cause a cascade of
         # eager evaluation/conversion
@@ -114,15 +114,15 @@ class ToSExpTest(unittest.TestCase):
         obj.pair = None
         obj.atom = None
         print(dir(obj))
-        assert looks_like_clvm_object(obj)
+        assert looks_like_chik_clvm_object(obj)
 
         obj = dummy()
         obj.pair = None
-        assert not looks_like_clvm_object(obj)
+        assert not looks_like_chik_clvm_object(obj)
 
         obj = dummy()
         obj.atom = None
-        assert not looks_like_clvm_object(obj)
+        assert not looks_like_chik_clvm_object(obj)
 
     def test_list_conversions(self):
         a = SExp.to([1, 2, 3])

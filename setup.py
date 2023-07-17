@@ -10,18 +10,18 @@ dependencies = [
 ]
 
 dev_dependencies = [
-    "clvm_tools>=0.4.4",
+    "chik_clvm_tools>=0.4.4",
     "pytest",
 ]
 
 setup(
-    name="clvm",
-    packages=["clvm",],
-    author="Chia Network, Inc.",
-    author_email="hello@chia.net",
-    url="https://github.com/Chia-Network/clvm",
+    name="chik_clvm",
+    packages=["chik_clvm",],
+    author="Chik Network, Inc.",
+    author_email="hello@chiknetwork.com",
+    url="https://github.com/Chik-Network/chik_clvm",
     license="https://opensource.org/licenses/Apache-2.0",
-    description="[Contract Language | Chialisp] Virtual Machine",
+    description="[Contract Language | Chiklisp] Virtual Machine",
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=dependencies,
@@ -35,7 +35,7 @@ setup(
     ],
     extras_require=dict(dev=dev_dependencies,),
     project_urls={
-        "Bug Reports": "https://github.com/Chia-Network/clvm",
-        "Source": "https://github.com/Chia-Network/clvm",
+        "Bug Reports": "https://github.com/Chik-Network/chik_clvm",
+        "Source": "https://github.com/Chik-Network/chik_clvm",
     },
 )

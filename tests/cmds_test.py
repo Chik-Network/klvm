@@ -57,7 +57,7 @@ class TestCmds(unittest.TestCase):
         sys.stderr = stderr_buffer
 
         args = shlex.split(cmd_line)
-        v = pkg_resources.load_entry_point("clvm_tools", "console_scripts", args[0])(
+        v = pkg_resources.load_entry_point("chik_clvm_tools", "console_scripts", args[0])(
             args
         )
 
@@ -113,7 +113,7 @@ if __name__ == "__main__":
 
 
 """
-Copyright 2018 Chia Network Inc
+Copyright 2018 Chik Network Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

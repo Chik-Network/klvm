@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 0
           # we need fetch-depth 0 so setuptools_scm can resolve tags
       - name: Setup python
-        uses: chia-network/actions/setup-python@main
+        uses: chik-network/actions/setup-python@main
         with:
           python-version: ${{ matrix.python-version }}
           architecture: x64
@@ -39,14 +39,14 @@ jobs:
           python -m pip install coveralls
           python -m pip install flake8
       - name: flake8
-        run: flake8 clvm tests --max-line-length=120
+        run: flake8 chik_clvm tests --max-line-length=120
       - name: Test with pytest
         run: |
           py.test tests
-          coverage run --branch --include=clvm/SExp.py -m pytest tests/as_python_test.py
-          coverage run -a --branch --include=clvm/serialize.py -m pytest tests/serialize_test.py
-          coverage run -a --branch --include=clvm/operators.py -m pytest tests/operators_test.py
-          coverage run -a --branch --source=clvm --omit=clvm/SExp.py,clvm/serialize.py,clvm/operators.py -m pytest tests
+          coverage run --branch --include=chik_clvm/SExp.py -m pytest tests/as_python_test.py
+          coverage run -a --branch --include=chik_clvm/serialize.py -m pytest tests/serialize_test.py
+          coverage run -a --branch --include=chik_clvm/operators.py -m pytest tests/operators_test.py
+          coverage run -a --branch --source=chik_clvm --omit=chik_clvm/SExp.py,chik_clvm/serialize.py,chik_clvm/operators.py -m pytest tests
           coverage report -m
       - name: coverall
         continue-on-error: true

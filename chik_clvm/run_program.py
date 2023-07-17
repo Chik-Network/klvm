@@ -1,6 +1,6 @@
 from typing import Any, Callable, List, Tuple
 
-from .CLVMObject import CLVMObject
+from .CHIK_CLVMObject import CHIK_CLVMObject
 from .EvalError import EvalError
 from .SExp import SExp
 
@@ -46,12 +46,12 @@ def msb_mask(byte):
 
 
 def run_program(
-    program: CLVMObject,
-    args: CLVMObject,
-    operator_lookup: Callable[[bytes, CLVMObject], Tuple[int, CLVMObject]],
+    program: CHIK_CLVMObject,
+    args: CHIK_CLVMObject,
+    operator_lookup: Callable[[bytes, CHIK_CLVMObject], Tuple[int, CHIK_CLVMObject]],
     max_cost=None,
     pre_eval_f=None,
-) -> Tuple[int, CLVMObject]:
+) -> Tuple[int, CHIK_CLVMObject]:
 
     program = SExp.to(program)
     if pre_eval_f:

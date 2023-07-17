@@ -1,2 +1,2 @@
 brun '(x () ())'
-FAIL: clvm raise (() ())
+FAIL: chik_clvm raise (() ())
