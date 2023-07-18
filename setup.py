@@ -10,16 +10,16 @@ dependencies = [
 ]
 
 dev_dependencies = [
-    "chik_clvm_tools>=0.4.4",
+    "klvm_tools>=0.4.4",
     "pytest",
 ]
 
 setup(
-    name="chik_clvm",
-    packages=["chik_clvm",],
+    name="klvm",
+    packages=["klvm",],
     author="Chik Network, Inc.",
     author_email="hello@chiknetwork.com",
-    url="https://github.com/Chik-Network/chik_clvm",
+    url="https://github.com/Chik-Network/klvm",
     license="https://opensource.org/licenses/Apache-2.0",
     description="[Contract Language | Chiklisp] Virtual Machine",
     long_description=long_description,
@@ -35,7 +35,7 @@ setup(
     ],
     extras_require=dict(dev=dev_dependencies,),
     project_urls={
-        "Bug Reports": "https://github.com/Chik-Network/chik_clvm",
-        "Source": "https://github.com/Chik-Network/chik_clvm",
+        "Bug Reports": "https://github.com/Chik-Network/klvm",
+        "Source": "https://github.com/Chik-Network/klvm",
     },
 )

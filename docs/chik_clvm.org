@@ -1,4 +1,4 @@
-#+TITLE: chik_clvm
+#+TITLE: klvm
 #+OPTIONS: ^:nil
 * Introduction
 
@@ -6,15 +6,15 @@ Cryptocurrency depends upon digital signatures corresponding to public keys. But
 
 In bitcoin, coins are grouped into a "utxo", which are protected by a "puzzle program" (known in bitcoin as "pubkey script"). This puzzle program generally lists one or more public keys, and to spend the coins in the utxo, these keys must sign a hash of a message derived from the spending transaction. Exactly how the message is derived can be chosen from several options depending on which parts of the spending transaction are relevant to the signer, and it's very complicated and frankly kind of a mess, but the message essentially says "this signature blesses the spending of these coins as long as the spending transactions includes this set of inputs and that set of outputs".
 
-Chik makes these messages explicit. Although chik_clvm ("contract language virtual machine") is a general purpose language, typically a signature signs a program written in chik_clvm which is then executed to produce a list of "conditions" which explicitly list out what restrictions the transaction or block which spends the coins must meet. These conditions include things like "the input being signed must be X", "this output Y must be included", "the signature is only valid in a block created after time Z". So the restrictions place upon inputs, outputs and spending time can be much more complicated than in bitcoin.
+Chik makes these messages explicit. Although klvm ("contract language virtual machine") is a general purpose language, typically a signature signs a program written in klvm which is then executed to produce a list of "conditions" which explicitly list out what restrictions the transaction or block which spends the coins must meet. These conditions include things like "the input being signed must be X", "this output Y must be included", "the signature is only valid in a block created after time Z". So the restrictions place upon inputs, outputs and spending time can be much more complicated than in bitcoin.
 
-* chik_clvm
+* klvm
 
-The acronym *chik_clvm* stands for Contract Language Virtual Machine, or Chik Lisp Virtual Machine depending upon whether we are referring to the trademarked version or generic version. Both puzzles and solutions are written in this language.
+The acronym *klvm* stands for Contract Language Virtual Machine, or Chik Lisp Virtual Machine depending upon whether we are referring to the trademarked version or generic version. Both puzzles and solutions are written in this language.
 
 ** Compilers
 
-The chik_clvm is intended to be like an assembly-language level of programming, and is intentionally missing such operators such as ~list~ which are in most LISP-like languages. This makes writing programs more difficult, so compilation tools that transform programs from a higher-level LISP to the chik_clvm will be made available.
+The klvm is intended to be like an assembly-language level of programming, and is intentionally missing such operators such as ~list~ which are in most LISP-like languages. This makes writing programs more difficult, so compilation tools that transform programs from a higher-level LISP to the klvm will be made available.
 
 ** Opcodes
 

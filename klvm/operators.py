@@ -2,7 +2,7 @@ from typing import Dict, Tuple
 
 from . import core_ops, more_ops
 
-from .CHIK_CLVMObject import CHIK_CLVMObject
+from .KLVMObject import KLVMObject
 from .SExp import SExp
 from .EvalError import EvalError
 
@@ -99,7 +99,7 @@ def args_len(op_name, args):
 # this means that unknown ops where cost_function is 1, 2, or 3, may still be
 # fatal errors if the arguments passed are not atoms.
 
-def default_unknown_op(op: bytes, args: CHIK_CLVMObject) -> Tuple[int, CHIK_CLVMObject]:
+def default_unknown_op(op: bytes, args: KLVMObject) -> Tuple[int, KLVMObject]:
     # any opcode starting with ffff is reserved (i.e. fatal error)
     # opcodes are not allowed to be empty
     if len(op) == 0 or op[:2] == b"\xff\xff":
@@ -187,7 +187,7 @@ class OperatorDict(dict):
             self.unknown_op_handler = default_unknown_op
         return self
 
-    def __call__(self, op: bytes, arguments: CHIK_CLVMObject) -> Tuple[int, CHIK_CLVMObject]:
+    def __call__(self, op: bytes, arguments: KLVMObject) -> Tuple[int, KLVMObject]:
         f = self.get(op)
         if f is None:
             return self.unknown_op_handler(op, arguments)

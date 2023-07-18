@@ -1,2 +1,2 @@
 brun '(x (q . 99))'
-FAIL: chik_clvm raise 99
+FAIL: klvm raise 99

@@ -13,7 +13,7 @@
 #   1000 0000 -> 0 bytes : nil
 #   0000 0000 -> 1 byte : zero (b'\x00')
 import io
-from .CHIK_CLVMObject import CHIK_CLVMObject
+from .KLVMObject import KLVMObject
 
 
 MAX_SINGLE_BYTE = 0x7F
@@ -104,7 +104,7 @@ def sexp_from_stream(f, to_sexp):
 
     while op_stack:
         func = op_stack.pop()
-        func(op_stack, val_stack, f, CHIK_CLVMObject)
+        func(op_stack, val_stack, f, KLVMObject)
     return to_sexp(val_stack.pop())
 
 

@@ -1,8 +1,8 @@
 import io
 import unittest
 
-from chik_clvm import to_sexp_f
-from chik_clvm.serialize import (sexp_from_stream, sexp_buffer_from_stream, atom_to_byte_iterator)
+from klvm import to_sexp_f
+from klvm.serialize import (sexp_from_stream, sexp_buffer_from_stream, atom_to_byte_iterator)
 
 
 TEXT = b"the quick brown fox jumps over the lazy dogs"

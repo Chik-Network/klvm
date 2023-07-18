@@ -1,9 +1,9 @@
 import unittest
 
-from chik_clvm import SExp
-from chik_clvm.CHIK_CLVMObject import CHIK_CLVMObject
+from klvm import SExp
+from klvm.KLVMObject import KLVMObject
 from blspy import G1Element
-from chik_clvm.EvalError import EvalError
+from klvm.EvalError import EvalError
 
 
 class dummy_class:
@@ -59,8 +59,8 @@ class AsPythonTest(unittest.TestCase):
 
     def test_list_of_one(self):
         v = SExp.to([1])
-        self.assertEqual(type(v.pair[0]), CHIK_CLVMObject)
-        self.assertEqual(type(v.pair[1]), CHIK_CLVMObject)
+        self.assertEqual(type(v.pair[0]), KLVMObject)
+        self.assertEqual(type(v.pair[1]), KLVMObject)
         self.assertEqual(type(v.as_pair()[0]), SExp)
         self.assertEqual(type(v.as_pair()[1]), SExp)
         self.assertEqual(v.pair[0].atom, b"\x01")
@@ -183,9 +183,9 @@ class AsPythonTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             s = SExp.to((dummy_class, dummy_class, dummy_class))
 
-    def test_chik_clvm_object_tuple(self):
-        o1 = CHIK_CLVMObject(b"foo")
-        o2 = CHIK_CLVMObject(b"bar")
+    def test_klvm_object_tuple(self):
+        o1 = KLVMObject(b"foo")
+        o2 = KLVMObject(b"bar")
         self.assertEqual(SExp.to((o1, o2)), (o1, o2))
 
     def test_first(self):

@@ -1,4 +1,4 @@
-#+TITLE: Release Notes for chik_clvm
+#+TITLE: Release Notes for klvm
 
 * v0.2
 
@@ -13,11 +13,11 @@ Briefly, ~((c SEXP ARGS))~ is equivalent to ~(e SEXP ARGS)~. The
 start using the new form instead. In v0.3, the ~e~ operator will
 be removed.
 
-To make this easier, if the environment variable ~CHIK_CLVM_DISALLOW_E_OP~
+To make this easier, if the environment variable ~KLVM_DISALLOW_E_OP~
 is set, whenever a use of the ~e~ operator is encountered, an exception will
 be raised
 
-If ~CHIK_CLVM_DISALLOW_E_OP~ is set to the special value ~breakpoint~,
+If ~KLVM_DISALLOW_E_OP~ is set to the special value ~breakpoint~,
 the python debugger will be launched via [[https://docs.python.org/3.7/library/functions.html#breakpoint][breakpoint()]], newly
 introduced in Python 3.7.
 
@@ -27,15 +27,15 @@ introduced in Python 3.7.
 $ brun '(e (q (+ (q 500))) (q ()))'
 500
 
-$ CHIK_CLVM_DISALLOW_E_OP=1 brun '(e (q (+ (q 500))) (q ()))'
+$ KLVM_DISALLOW_E_OP=1 brun '(e (q (+ (q 500))) (q ()))'
 FAIL: e operator no longer supported (e (q (+ (q 500))) (q ()))
 
-$ CHIK_CLVM_DISALLOW_E_OP=breakpoint brun '(e (q (+ (q 500))) (q ()))'
+$ KLVM_DISALLOW_E_OP=breakpoint brun '(e (q (+ (q 500))) (q ()))'
 (e (q (+ (q 500))) (q ()))
-> /Users/kiss/projects/chik/chik_clvm/make_eval.py(46)eval_core()
+> /Users/kiss/projects/chik/klvm/make_eval.py(46)eval_core()
 -> raise EvalError("e operator no longer supported", form)
 
-$ CHIK_CLVM_DISALLOW_E_OP=breakpoint brun '((c (q (+ (q 500))) (q ())))'
+$ KLVM_DISALLOW_E_OP=breakpoint brun '((c (q (+ (q 500))) (q ())))'
 500
 #+END_SRC
 

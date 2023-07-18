@@ -57,7 +57,7 @@ class TestCmds(unittest.TestCase):
         sys.stderr = stderr_buffer
 
         args = shlex.split(cmd_line)
-        v = pkg_resources.load_entry_point("chik_clvm_tools", "console_scripts", args[0])(
+        v = pkg_resources.load_entry_point("klvm_tools", "console_scripts", args[0])(
             args
         )
 

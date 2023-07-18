@@ -1,5 +1,5 @@
 brun --backend=python -c -v '(x)'
-FAIL: chik_clvm raise ()
+FAIL: klvm raise ()
 
 (x) [()] => (didn't finish)
 

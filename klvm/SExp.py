@@ -4,7 +4,7 @@ import typing
 from blspy import G1Element
 
 from .as_python import as_python
-from .CHIK_CLVMObject import CHIK_CLVMObject
+from .KLVMObject import KLVMObject
 
 from .EvalError import EvalError
 
@@ -17,7 +17,7 @@ from .serialize import sexp_to_stream
 
 CastableType = typing.Union[
     "SExp",
-    "CHIK_CLVMObject",
+    "KLVMObject",
     bytes,
     str,
     int,
@@ -31,7 +31,7 @@ CastableType = typing.Union[
 NULL = b""
 
 
-def looks_like_chik_clvm_object(o: typing.Any) -> bool:
+def looks_like_klvm_object(o: typing.Any) -> bool:
     d = dir(o)
     return "atom" in d and "pair" in d
 
@@ -57,7 +57,7 @@ def convert_atom_to_bytes(
     raise ValueError("can't cast %s (%s) to bytes" % (type(v), v))
 
 
-# returns a chik_clvm-object like object
+# returns a klvm-object like object
 def to_sexp_type(
     v: CastableType,
 ):
@@ -68,7 +68,7 @@ def to_sexp_type(
         op, target = ops.pop()
         # convert value
         if op == 0:
-            if looks_like_chik_clvm_object(stack[-1]):
+            if looks_like_klvm_object(stack[-1]):
                 continue
             v = stack.pop()
             if isinstance(v, tuple):
@@ -76,69 +76,69 @@ def to_sexp_type(
                     raise ValueError("can't cast tuple of size %d" % len(v))
                 left, right = v
                 target = len(stack)
-                stack.append(CHIK_CLVMObject((left, right)))
-                if not looks_like_chik_clvm_object(right):
+                stack.append(KLVMObject((left, right)))
+                if not looks_like_klvm_object(right):
                     stack.append(right)
                     ops.append((2, target))  # set right
                     ops.append((0, None))  # convert
-                if not looks_like_chik_clvm_object(left):
+                if not looks_like_klvm_object(left):
                     stack.append(left)
                     ops.append((1, target))  # set left
                     ops.append((0, None))  # convert
                 continue
             if isinstance(v, list):
                 target = len(stack)
-                stack.append(CHIK_CLVMObject(NULL))
+                stack.append(KLVMObject(NULL))
                 for _ in v:
                     stack.append(_)
                     ops.append((3, target))  # prepend list
                     # we only need to convert if it's not already the right
                     # type
-                    if not looks_like_chik_clvm_object(_):
+                    if not looks_like_klvm_object(_):
                         ops.append((0, None))  # convert
                 continue
-            stack.append(CHIK_CLVMObject(convert_atom_to_bytes(v)))
+            stack.append(KLVMObject(convert_atom_to_bytes(v)))
             continue
 
         if op == 1:  # set left
-            stack[target].pair = (CHIK_CLVMObject(stack.pop()), stack[target].pair[1])
+            stack[target].pair = (KLVMObject(stack.pop()), stack[target].pair[1])
             continue
         if op == 2:  # set right
-            stack[target].pair = (stack[target].pair[0], CHIK_CLVMObject(stack.pop()))
+            stack[target].pair = (stack[target].pair[0], KLVMObject(stack.pop()))
             continue
         if op == 3:  # prepend list
-            stack[target] = CHIK_CLVMObject((stack.pop(), stack[target]))
+            stack[target] = KLVMObject((stack.pop(), stack[target]))
             continue
     # there's exactly one item left at this point
     if len(stack) != 1:
         raise ValueError("internal error")
 
-    # stack[0] implements the chik_clvm object protocol and can be wrapped by an SExp
+    # stack[0] implements the klvm object protocol and can be wrapped by an SExp
     return stack[0]
 
 
 class SExp:
     """
-    SExp provides higher level API on top of any object implementing the CHIK_CLVM
+    SExp provides higher level API on top of any object implementing the KLVM
     object protocol.
-    The tree of values is not a tree of SExp objects, it's a tree of CHIK_CLVMObject
+    The tree of values is not a tree of SExp objects, it's a tree of KLVMObject
     like objects. SExp simply wraps them to privide a uniform view of any
     underlying conforming tree structure.
 
-    The CHIK_CLVM object protocol (concept) exposes two attributes:
+    The KLVM object protocol (concept) exposes two attributes:
     1. "atom" which is either None or bytes
     2. "pair" which is either None or a tuple of exactly two elements. Both
-       elements implementing the CHIK_CLVM object protocol.
+       elements implementing the KLVM object protocol.
     Exactly one of "atom" and "pair" must be None.
     """
     true: "SExp"
     false: "SExp"
     __null__: "SExp"
 
-    # the underlying object implementing the chik_clvm object protocol
+    # the underlying object implementing the klvm object protocol
     atom: typing.Optional[bytes]
 
-    # this is a tuple of the otherlying CHIK_CLVMObject-like objects. i.e. not
+    # this is a tuple of the otherlying KLVMObject-like objects. i.e. not
     # SExp objects with higher level functions, or None
     pair: typing.Optional[typing.Tuple[typing.Any, typing.Any]]
 
@@ -177,7 +177,7 @@ class SExp:
         if isinstance(v, class_):
             return v
 
-        if looks_like_chik_clvm_object(v):
+        if looks_like_klvm_object(v):
             return class_(v)
 
         # this will lazily convert elements
@@ -246,5 +246,5 @@ class SExp:
         return "%s(%s)" % (self.__class__.__name__, str(self))
 
 
-SExp.false = SExp.__null__ = SExp(CHIK_CLVMObject(b""))
-SExp.true = SExp(CHIK_CLVMObject(b"\1"))
+SExp.false = SExp.__null__ = SExp(KLVMObject(b""))
+SExp.true = SExp(KLVMObject(b"\1"))

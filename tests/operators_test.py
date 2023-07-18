@@ -1,9 +1,9 @@
 import unittest
 
-from chik_clvm.operators import (OPERATOR_LOOKUP, KEYWORD_TO_ATOM, default_unknown_op, OperatorDict)
-from chik_clvm.EvalError import EvalError
-from chik_clvm import SExp
-from chik_clvm.costs import CONCAT_BASE_COST
+from klvm.operators import (OPERATOR_LOOKUP, KEYWORD_TO_ATOM, default_unknown_op, OperatorDict)
+from klvm.EvalError import EvalError
+from klvm import SExp
+from klvm.costs import CONCAT_BASE_COST
 
 
 class OperatorsTest(unittest.TestCase):
