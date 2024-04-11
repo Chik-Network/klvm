@@ -20,7 +20,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        python-version: [ '3.8', '3.9', '3.10', '3.11']
+        python-version: [ '3.8', '3.9', '3.10', '3.11', '3.12']
     steps:
       - uses: actions/checkout@v3
         with:
@@ -42,7 +42,7 @@ jobs:
         run: flake8 klvm tests --max-line-length=120
       - name: Test with pytest
         run: |
-          py.test tests
+          pytest tests
           coverage run --branch --include=klvm/SExp.py -m pytest tests/as_python_test.py
           coverage run -a --branch --include=klvm/serialize.py -m pytest tests/serialize_test.py
           coverage run -a --branch --include=klvm/operators.py -m pytest tests/operators_test.py

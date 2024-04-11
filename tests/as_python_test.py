@@ -2,7 +2,7 @@ import unittest
 
 from klvm import SExp
 from klvm.KLVMObject import KLVMObject
-from blspy import G1Element
+from chik_rs import G1Element
 from klvm.EvalError import EvalError
 
 
@@ -71,7 +71,7 @@ class AsPythonTest(unittest.TestCase):
             "b3b8ac537f4fd6bde9b26221d49b54b17a506be147347dae5"
             "d081c0a6572b611d8484e338f3432971a9823976c6a232b"
         )
-        v = SExp.to(G1Element(b))
+        v = SExp.to(G1Element.from_bytes(b))
         self.assertEqual(v.atom, b)
 
     def test_complex(self):
@@ -168,20 +168,14 @@ class AsPythonTest(unittest.TestCase):
 
     def test_invalid_type(self):
         with self.assertRaises(ValueError):
-            s = SExp.to(dummy_class)
-            # conversions are deferred, this is where it will fail:
-            b = list(s.as_iter())
-            print(b)
+            SExp.to(dummy_class)
 
     def test_invalid_tuple(self):
         with self.assertRaises(ValueError):
-            s = SExp.to((dummy_class, dummy_class))
-            # conversions are deferred, this is where it will fail:
-            b = list(s.as_iter())
-            print(b)
+            SExp.to((dummy_class, dummy_class))
 
         with self.assertRaises(ValueError):
-            s = SExp.to((dummy_class, dummy_class, dummy_class))
+            SExp.to((dummy_class, dummy_class, dummy_class))
 
     def test_klvm_object_tuple(self):
         o1 = KLVMObject(b"foo")
