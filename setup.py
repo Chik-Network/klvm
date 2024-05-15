@@ -5,9 +5,19 @@ from setuptools import setup
 with open("README.md", "rt") as fh:
     long_description = fh.read()
 
-dependencies = ["chik_rs>=0.2.13", "importlib_metadata~=6.11.0"]
+dependencies = [
+    "chik_rs>=0.2.13",
+    "importlib_metadata~=6.11.0",
+    "typing-extensions~=4.0",
+]
 
-dev_dependencies = ["klvm_tools>=0.4.4", "pytest", "setuptools"]
+dev_dependencies = [
+    "klvm_tools>=0.4.4",
+    "mypy",
+    "pytest",
+    "setuptools",
+    "types-setuptools",
+]
 
 setup(
     name="klvm",
@@ -39,5 +49,8 @@ setup(
     project_urls={
         "Bug Reports": "https://github.com/Chik-Network/klvm",
         "Source": "https://github.com/Chik-Network/klvm",
+    },
+    package_data={
+        "": ["py.typed"],
     },
 )
