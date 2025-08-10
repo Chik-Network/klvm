@@ -8,6 +8,8 @@ See docs/klvm.org or https://chiklisp.com/ for more info.
 Testing
 =======
 
+    $ python3 -m venv venv
+    $ . ./venv/bin/activate
     $ pip install -e '.[dev]'
-    $ py.test tests
+    $ pytest tests
 
